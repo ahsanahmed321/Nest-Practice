@@ -91,6 +91,7 @@ export class TasksService {
       { _id: id },
       { status: status },
     );
+
     return task;
   }
 }
