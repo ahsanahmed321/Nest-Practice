@@ -34,15 +34,18 @@ export class TasksService {
     //  return tas;
   }
 
-  getTaskById(id: String): Task {
-    const found = this.tasks.find(task => {
-      return task.id === id;
-    });
-
+  async getTaskById(id: String) {
+    // const found = this.tasks.find(task => {
+    //   return task.id === id;
+    // });
+    // if (!found) {
+    //   throw new NotFoundException(`Task with id "${id}"not found`);
+    // }
+    //  return found;
+    const found = await this.taskModel.findOne({ _id: id });
     if (!found) {
       throw new NotFoundException(`Task with id "${id}"not found`);
     }
-
     return found;
   }
 
@@ -67,23 +70,27 @@ export class TasksService {
     return result as string;
   }
 
-  deleteTaskById(id: String): void {
-    this.getTaskById(id);
-    this.tasks.forEach(task => {
-      console.log(task.id);
-    });
-
-    const filterdTasks = this.tasks.filter(task => {
-      return task.id !== id;
-    });
-
-    this.tasks = [...filterdTasks];
+  async deleteTaskById(id: String) {
+    // this.getTaskById(id);
+    // this.tasks.forEach(task => {
+    //   console.log(task.id);
+    // });
+    // const filterdTasks = this.tasks.filter(task => {
+    //   return task.id !== id;
+    // });
+    // this.tasks = [...filterdTasks];
+    await this.taskModel.findOneAndDelete({ _id: id });
   }
 
-  updateTaskStatusById(id: String, status: TaskStatus): Task {
-    const task = this.getTaskById(id);
-    console.log(task);
-    task.status = status;
+  async updateTaskStatusById(id: String, status: TaskStatus) {
+    // const task = await this.getTaskById(id);
+    // console.log(task);
+    // task.status = status;
+    // return task;
+    const task = await this.taskModel.findOneAndUpdate(
+      { _id: id },
+      { status: status },
+    );
     return task;
   }
 }

@@ -30,8 +30,8 @@ export class TasksController {
   }
 
   @Get('/:id')
-  getTaskById(@Param('id') id: String): Task {
-    return this.taskService.getTaskById(id);
+  async getTaskById(@Param('id') id: String) {
+    return await this.taskService.getTaskById(id);
   }
 
   @Post()
@@ -41,15 +41,15 @@ export class TasksController {
   }
 
   @Delete('/:id')
-  deleteTaskById(@Param('id') id: String): void {
-    this.taskService.deleteTaskById(id);
+  async deleteTaskById(@Param('id') id: String) {
+    await this.taskService.deleteTaskById(id);
   }
 
   @Patch('/:id/status')
-  updateTaskStatusById(
+  async updateTaskStatusById(
     @Param('id') id: String,
     @Body('status', TaskStatusValidationPipe) status: TaskStatus,
-  ): Task {
-    return this.taskService.updateTaskStatusById(id, status);
+  ) {
+    return await this.taskService.updateTaskStatusById(id, status);
   }
 }
