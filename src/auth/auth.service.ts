@@ -32,8 +32,11 @@ export class AuthService {
     });
 
     if (user) {
-      const accessToken = await this.jwtService.sign(username);
-      console.log(accessToken);
+      console.log(username);
+      const payload = { username: username };
+      console.log(payload);
+      const accessToken = await this.jwtService.sign(payload);
+      console.log('console result ====token', accessToken);
       return accessToken;
     } else {
       throw new NotFoundException();
